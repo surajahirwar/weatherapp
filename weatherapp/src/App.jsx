@@ -1,4 +1,7 @@
+
+
 import Weather from "./components/Weather"
+
 
 
 function App() {
@@ -6,8 +9,10 @@ function App() {
   return (
     <div className="App">
       
-      hello world
+     
       <Weather />
+     
+    
     </div>
   )
 }
