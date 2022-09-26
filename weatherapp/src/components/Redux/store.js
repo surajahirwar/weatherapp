@@ -4,6 +4,7 @@ import { weatherReducer } from "./reducer/weatherReducer";
 
 const rootReducer = combineReducers({
     weatherReducer:weatherReducer,
+    
    
 })
 
