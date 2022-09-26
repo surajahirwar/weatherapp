@@ -23,6 +23,7 @@ import cloudyrain from "../assets/cloudyrain.png"
 import rain from "../assets/rain.png"
 import rainy from "../assets/rainy.png"
 import sunny from "../assets/sunny.png"
+import axios from "axios";
 
 
 export default function Weather() {
@@ -34,14 +35,41 @@ export default function Weather() {
   const dispatch = useDispatch();
   const { data, getdata } = useSelector((state) => state.weatherReducer);
  const obj = [1,2,3,4,5,6,7]
-  
- console.log(data.daily)
     
   useEffect(() => {
     
     dispatch(Getweather());
   },[]);
 
+
+  const [humiditydata, sethumiditydata] = useState([])
+  const newdata = []
+  const newtemp = []
+  useEffect(() => {
+    
+    axios.get("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=23.4162&lon=25.6628&dt=1664009618&units=metric&appid=0e8b2c4e5a41d2b3b81897c77b9e4d88")
+    .then((e)=>{
+
+      sethumiditydata(e.data.current)
+      
+        
+    })  
+    
+  },[]);
+
+ 
+  console.log(humiditydata)
+  
+
+
+const rettime = (day)=>{
+  const date = new Date(day*1000)
+var hor = (date.getHours())
+var min = (date.getMinutes())
+var sec = (date.getSeconds())
+return (hor+":"+min+":"+sec)
+
+}
 
 
 
@@ -89,18 +117,21 @@ if(getdata.loading) return <div
         alignItems={"center"}
         flexDir="column"
         position="absolute"
-        border={"2px solid red"}
+        // border={"2px solid red"}
       >
         <Box
           mt="20px"
-          border={"2px solid green"}
+          // border={"2px solid green"}
           width={{ base: "100%", md: "70%" }}
           display="flex" 
           justifyContent={"center"}
           alignItems={"center"}
           flexDir="column"
+          overflow={"hidden"}
+          boxShadow={"xl"}
+          padding="20px"
         >
-          <Stack mt="20px" border={"2px solid grey"}  rounded="2xl" spacing={4} w={{ base: "xs", md: "md" }}>
+          <Stack mt="20px" border={"2px solid grey"}  boxShadow="lg" rounded="2xl" spacing={4} w={{ base: "xs", md: "md" }}>
             <InputGroup borderColor={"white"} outline="none">
 
 
@@ -153,7 +184,7 @@ if(getdata.loading) return <div
             </Box>
                 ))}
           </Flex>
-          <Box overflow={"scroll"}   maxW="xl" >
+          <Box overflow={"scroll"} maxW="xl" >
           <BarChart />
           </Box>
 
@@ -168,11 +199,11 @@ if(getdata.loading) return <div
            >
             <Box padding={2} bg="teal.100" w={{base :"200px" , md:"400px"}}>
                 <Text fontWeight={600}>Pressure</Text>
-                <Text fontWeight={400}>1005 hpa</Text>
+                <Text fontWeight={400}>{humiditydata.pressure} hpa</Text>
             </Box>
             <Box   padding={2} bg="teal.100" w={{base :"200px" , md:"400px"}}>
                 <Text fontWeight={600}>Humidity</Text>
-                <Text fontWeight={400}>80%</Text>
+                <Text fontWeight={400}>{humiditydata.humidity}%</Text>
             </Box>
                     
                 
@@ -190,11 +221,11 @@ if(getdata.loading) return <div
            
             <Box padding={2}  w={{base :"200px" , md:"400px"}}>
                 <Text fontWeight={800}>Sunrise</Text>
-                <Text fontWeight={600}>5:41am</Text>
+                <Text fontWeight={600}>{rettime(humiditydata.sunrise)}</Text>
             </Box>
             <Box  padding={2}  w={{base :"200px" , md:"400px"}}>
                 <Text textAlign={"end"} fontWeight={800}>Sunset</Text>
-                <Text textAlign={"end"} fontWeight={600}>5:45pm</Text>
+                <Text textAlign={"end"} fontWeight={600}>{rettime(humiditydata.sunset)}</Text>
             </Box>
                     
                 
