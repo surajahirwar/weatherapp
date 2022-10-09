@@ -12,24 +12,28 @@ import { useEffect, useState } from 'react';
 
 
 
-export default function BarChart ({location}){
+export default function BarChart ({lat, long, dt}){
 
-  // console.log(location)
+  var API_KEY = "b045804ab93431828b3e101e2be26dc1"
 
   const [data, setdata] = useState([])
   const newdata = []
   const newtemp = []
   useEffect(() => {
     
-    axios.get(`https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=${location.lat}&lon=${location.lon}&dt=1664009618&units=metric&appid=3e513c133abef78e5e0b44a73b1dbe92`)
-    .then((e)=>{
-
-      setdata(e.data.hourly)
-      
+    const getdata =  async () =>{
+      await axios.get(`https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=${lat}&lon=${long}&dt=${dt-110885}&units=metric&appid=${API_KEY}`)
+      .then((e)=>{
+  
+        setdata(e.data.hourly)
         
-    })  
+          
+      })  
+    }
+  getdata()
     
-  },[location]);
+    
+  },[lat, long, dt]);
 
   const getday = (day) =>{
    var hoursday = new Date(day*1000)

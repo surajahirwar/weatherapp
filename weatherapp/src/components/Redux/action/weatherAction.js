@@ -3,7 +3,7 @@ import { error, loading, success } from "../Type";
 
 export const Getweather = () => (dispatch)=> {
     dispatch({ type: loading });
-    axios.get("https://api.openweathermap.org/data/2.5/onecall?lat=41.211128&lon=-174.908081&exclude=hourly,minutely&units=metric&appid=0e8b2c4e5a41d2b3b81897c77b9e4d88")
+    axios.get("https://api.openweathermap.org/data/2.5/onecall?lat=41.211128&lon=-174.908081&exclude=hourly,minutely&units=metric&appid=977e0624961df3cc904063e07026af4b")
     .then((e)=>{
         dispatch({type:success, payload:e.data})
     })  

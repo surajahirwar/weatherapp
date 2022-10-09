@@ -1,7 +1,7 @@
 
 
 import Weather from "./components/Weather"
-
+import Data from  "./db.json"
 
 
 function App() {
@@ -10,7 +10,7 @@ function App() {
     <div className="App">
       
      
-      <Weather />
+      <Weather Data={Data} />
      
     
     </div>
